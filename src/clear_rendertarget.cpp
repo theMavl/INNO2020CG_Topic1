@@ -7,29 +7,39 @@
 #include <stdexcept>
 
 
-cg::ClearRenderTarget::ClearRenderTarget(unsigned short width, unsigned short height):
+cg::ClearRenderTarget::ClearRenderTarget(unsigned width, unsigned height):
     width(width),
     height(height)
 {
-    throw std::runtime_error("Not implemented yet");
+    frame_buffer.reserve(static_cast<size_t>(width * height));
 }
 
 cg::ClearRenderTarget::~ClearRenderTarget()
 {
-    throw std::runtime_error("Not implemented yet");
+    frame_buffer.clear();
 }
 
 void cg::ClearRenderTarget::Clear()
 {
-    throw std::runtime_error("Not implemented yet");
+    /*
+   for (unsigned x = 0; x < width; x++) {
+       for (unsigned y = 0; y < height; y++)
+           SetPixel(x, y, color(123, 1, 2));
+   }
+   */
+   frame_buffer.resize(static_cast<size_t>(width * height));
 }
 
 void cg::ClearRenderTarget::Save(std::string filename) const
 {
-    throw std::runtime_error("Not implemented yet");
+    int result = stbi_write_png(filename.c_str(), width, height, 3, frame_buffer.data(), width * sizeof(color));
+
+    if (result != 1)
+        throw std::runtime_error("Can't save PNG");
 }
 
-void cg::ClearRenderTarget::SetPixel(unsigned short x, unsigned short y, color color)
+void cg::ClearRenderTarget::SetPixel(unsigned x, unsigned y, color color)
 {
-    throw std::runtime_error("Not implemented yet");
+    if (x < width && y < height)
+        frame_buffer[y * width + x] = color;
 }

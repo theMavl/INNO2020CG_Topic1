@@ -18,7 +18,7 @@ namespace cg
 		void Clear();
 
 	protected:
-		void DrawTriangle(float4 triangle[3]);
+		void DrawTriangle(face face);
 		void SetPixel(unsigned short x, unsigned short y, color color, float z);
 		std::vector<float> depth_buffer;
 
